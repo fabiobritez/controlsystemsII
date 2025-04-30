@@ -87,7 +87,6 @@ tiempos_relativos = [0.040, 0.080, 0.120]  # Tiempos para tensión
 # tiempos_relativos_torque = [40.3, 156.375, 199.166] # v1 , con nelder-mead simplex
 tiempos_relativos_torque = [50.6211,108.3162, 163.9544] # optimizado con algoritmo evolutivo (differential evolution)
 
-
 # === Tratamiento de señales para adaptar al metodo chen ===
 
 # Para tensión: usamos directamente la salida medida

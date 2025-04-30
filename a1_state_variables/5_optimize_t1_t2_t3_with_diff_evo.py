@@ -5,9 +5,12 @@ from scipy.signal import lsim, TransferFunction
 from scipy.optimize import differential_evolution
 
 # === Cargar datos ===
-file_path = "./data/Curvas_Medidas_RLC_2025.csv"
+file_path = "./data/Curvas_Medidas_Motor_2025.csv"
 df = pd.read_csv(file_path)
 df.columns = [col.strip() for col in df.columns]
+
+for col in df.columns:
+    print(repr(col))  # imprime los caracteres reales
 
 tiempos = df["Tiempo [Seg.]"].values
 salidas = df["Velocidad angular [rad /seg]"].values

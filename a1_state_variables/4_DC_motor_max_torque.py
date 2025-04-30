@@ -56,6 +56,8 @@ ia = x[0, :]
 omega = x[1, :]
 theta = x[2, :]
 torque = K_i * ia
+
+corriente_max = np.max(ia)
 torque_max = np.max(torque)
 
 fig, axs = plt.subplots(3, 1, figsize=(10, 8), sharex=True)
@@ -73,18 +75,18 @@ axs[1].set_title("Posición angular del motor")
 axs[1].grid()
 
 # Torque electromagnético
-axs[2].plot(time, torque, color='black')
+axs[2].plot(time, ia, color='black')
 axs[2].set_xlabel("Tiempo (s)")
-axs[2].set_ylabel("Torque (Nm)")
-axs[2].set_title("Torque electromagnético")
+axs[2].set_ylabel("Corriente (A)")
+axs[2].set_title("Corriente")
 axs[2].grid()
 
 # Marcar el torque máximo en rojo
-torque_max_idx = np.argmax(torque)  # índice del torque máximo
-axs[2].plot(time[torque_max_idx], torque_max, 'ro')  # punto rojo
-axs[2].annotate(f'{torque_max:.2e} Nm',
-                xy=(time[torque_max_idx], torque_max),
-                xytext=(time[torque_max_idx] + 0.01, torque_max),
+corriente_max_idx = np.argmax(ia)  # índice de la corriente máxima
+axs[2].plot(time[corriente_max_idx], corriente_max, 'ro')  # punto rojo
+axs[2].annotate(f'{corriente_max:.4f} A',
+                xy=(time[corriente_max_idx], corriente_max),
+                xytext=(time[corriente_max_idx] + 0.015, corriente_max-0.01),
                 arrowprops=dict(arrowstyle="->", color='red'),
                 color='red')
 
@@ -94,5 +96,6 @@ plt.show()
 # ========================
 # Resultado final
 # ========================
+print(f"Corriente máxima alcanzada: {corriente_max:.6f} A")
 print(f"Torque máximo alcanzado: {torque_max:.6f} Nm")
 

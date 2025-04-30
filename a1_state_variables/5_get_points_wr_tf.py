@@ -2,17 +2,20 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Cargar datos desde el CSV
-df = pd.read_csv("data/Curvas_Medidas_Motor_2025.csv")
 
-# Limpiar nombres de columnas
+
+file_path = "./data/Curvas_Medidas_Motor_2025.csv"
+df = pd.read_csv(file_path)
+
 df.columns = [col.strip() for col in df.columns]
 
 tiempo = df["Tiempo [Seg.]"].values
 salida = df["Velocidad angular [rad /seg]"].values
+
+
 # Definir la ventana de tiempo a visualizar
-tiempo_min = 0 #159.6
-tiempo_max = 3500#161
+tiempo_min = 164.2#159.6
+tiempo_max = 1500
 
 # Filtrar el DataFrame para incluir solo los datos dentro del rango deseado
 df_filtrado = df[(df['Tiempo [Seg.]'] >= tiempo_min) & (df['Tiempo [Seg.]'] <= tiempo_max)]
@@ -21,6 +24,9 @@ df_filtrado = df[(df['Tiempo [Seg.]'] >= tiempo_min) & (df['Tiempo [Seg.]'] <= t
 puntos_seleccionados = [160.030, 160.060, 160.090]
 valores_puntos = [np.interp(t, tiempo, salida) for t in puntos_seleccionados]
 
+puntos_seleccionados_torque = [50.62+161,108.31+161, 163.95+161]
+valores_puntos = [np.interp(t, tiempo, salida) for t in puntos_seleccionados_torque]
+
 # Crear gráficos
 plt.figure(figsize=(12, 10))
 
@@ -28,16 +34,28 @@ plt.figure(figsize=(12, 10))
 plt.subplot(4, 1, 1)
 plt.plot(df_filtrado['Tiempo [Seg.]'], df_filtrado['Velocidad angular [rad /seg]'], color='black')
 # Marcar puntos en rojo
-for t in puntos_seleccionados:
-    idx = df_filtrado['Tiempo [Seg.]'].sub(t).abs().idxmin()
-    valor = df_filtrado.loc[idx, 'Velocidad angular [rad /seg]']
-    plt.plot(t, valor, 'ro')
-    # Añadir texto apuntando al punto
-    plt.annotate(f'{t:.3f}s\n{valor:.2f} rad/s', 
-                 xy=(t, valor), 
-                 xytext=(t+0.02, valor-1),  # Posición TEXTO
-                 arrowprops=dict(arrowstyle='->', color='red'),
-                 fontsize=8)
+#for t in puntos_seleccionados:
+#    idx = df_filtrado['Tiempo [Seg.]'].sub(t).abs().idxmin()
+#    valor = df_filtrado.loc[idx, 'Velocidad angular [rad /seg]']
+#    plt.plot(t, valor, 'ro')
+#    # Añadir texto apuntando al punto
+#    plt.annotate(f'{t:.3f}s\n{valor:.2f} rad/s', 
+#                 xy=(t, valor), 
+#                 xytext=(t+0.02, valor-1),  # Posición TEXTO
+#                 arrowprops=dict(arrowstyle='->', color='red'),
+#                 fontsize=8)
+
+for t in puntos_seleccionados_torque:
+     idx = df_filtrado['Tiempo [Seg.]'].sub(t).abs().idxmin()
+     valor = df_filtrado.loc[idx, 'Velocidad angular [rad /seg]']
+     plt.plot(t, valor, 'ro')
+     # Añadir texto apuntando al punto
+     plt.annotate(f'{t:.3f}s\n{valor:.2f} rad/s', 
+                  xy=(t, valor), 
+                  xytext=(t+0.02, valor+1),  # Posición TEXTO
+                  arrowprops=dict(arrowstyle='->', color='red'),
+                  fontsize=8)
+
 
 plt.title(f'Velocidad angular ({tiempo_min}s - {tiempo_max}s)')
 plt.ylabel('Velocidad [rad/s]')
