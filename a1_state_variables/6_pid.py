@@ -147,16 +147,16 @@ metricas_cc = calcular_metricas(t, y_cc, e_cc)
 # === Mostrar métricas ===
 print("\n=== Comparativa de Desempeño ===")
 print("Controlador\tOvershoot [%]\tT. Establecimiento [s]\tError Final\tITAE")
-print(f"Cohen-Coon\t\t{metricas_cc[0]:.2f}\t\t{metricas_cc[1]:.2f}\t\t{metricas_cc[2]:.4f}\t{metricas_cc[3]:.2f}")
+# print(f"Cohen-Coon\t\t{metricas_cc[0]:.2f}\t\t{metricas_cc[1]:.2f}\t\t{metricas_cc[2]:.4f}\t{metricas_cc[3]:.2f}")
 print(f"Opt. Diff. Evo.\t{metricas_opt[0]:.2f}\t\t{metricas_opt[1]:.2f}\t\t{metricas_opt[2]:.4f}\t{metricas_opt[3]:.2f}")
 print(f"Z-N\t\t{metricas_zn[0]:.2f}\t\t{metricas_zn[1]:.2f}\t\t{metricas_zn[2]:.4f}\t{metricas_zn[3]:.2f}")
 
 # === Gráficas ===
-plt.figure(figsize=(14, 9))
+plt.figure(figsize=(10, 9))
 
 # Respuesta del sistema
 plt.subplot(3, 1, 1)
-plt.plot(t, y_cc, label=f"PID Cohen-Coon")
+# plt.plot(t, y_cc, label=f"PID Cohen-Coon")
 plt.plot(t, y_opt, label=f"PID Optimizado")
 plt.plot(t, y_zn, label=f"PID Z-N")
 plt.axhline(1.0, color='k', linestyle='--', label='Referencia')
@@ -167,7 +167,7 @@ plt.grid()
 
 # Señal de control
 plt.subplot(3, 1, 2)
-plt.plot(t, u_cc, label=f"u Cohen-Coon")
+#plt.plot(t, u_cc, label=f"u Cohen-Coon")
 plt.plot(t, u_opt, label=f"u Optimizado")
 plt.plot(t, u_zn, label=f"u Z-N")
 plt.ylabel('Señal de Control u(t)')
