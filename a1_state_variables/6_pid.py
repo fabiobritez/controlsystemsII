@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 from scipy.signal import tf2ss, cont2discrete
 
 # === Parámetros del modelo identificado ===
-K = 3.8181 # Va
-T1 = 0.006584 # Va
-T2 = 0.046201 #Va
+K = 3.8075 # Va
+T1 = 0.015142# Va
+T2 = 0.091430 #Va
 
 # === Planta continua incluyendo la integración (ángulo) ===
 num = [K]
